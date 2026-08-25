@@ -5,3 +5,12 @@ editor: visual
 ---
 
 # First Quatro
+
+```{r}
+head(mtcars
+     )
+```
+
+```{r}
+tail(mtcars)
+```
