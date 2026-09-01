@@ -8,3 +8,11 @@ editor: visual
 
 
 ## Ny Txt
+
+## Text
+```{r}
+1+1
+
+
+```
+
