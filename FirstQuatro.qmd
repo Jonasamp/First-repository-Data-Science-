@@ -8,6 +8,7 @@ editor: visual
 
 ```{r}
 library(tidyverse)
+library(ggplot2)
 ```
 
 ## Ny Txt
@@ -58,9 +59,14 @@ view(rogaland_t)
 
 ```
 
-```{r}
-library(ggplot2)
 ```
+
+
+```{r}
+
+```
+
+
 
 ```{r}
 ggplot(
@@ -70,15 +76,27 @@ ggplot(
   geom_point()
 ```
 
+
 ```{r}
 ggplot(
   data = mtcars,
   mapping = aes(x = disp, y = mpg)
-)+ geom_point(colour = "black")
+)+ geom_point(
+  mapping = aes(colour = "black")
+)
+```
+
 ```
 
 ```{r}
+mtcars
 ```
 
 ```{r}
+ggplot(
+  data = mtcars,
+  mapping = aes(x = disp, y = mpg)
+)+ geom_point(
+  mapping = aes(colour = hp, size = wt, shape = factor(cyl))
+)
 ```
