@@ -6,13 +6,79 @@ editor: visual
 
 # First Quatro
 
+```{r}
+library(tidyverse)
+```
 
 ## Ny Txt
 
 ## Text
+
 ```{r}
 1+1
+```
 
+```{r}
+url <- "https://www.nav.no/_/attachment/download/c0985215-d99f-4f61-956d-302034bcd0ec:0d32f598ec46743086dddc992a651e9b5ccb8d94/HL301%20Helt%20ledige.%20Fylke%20kommune.%20August%202026.%20CSV.csv"
+
+ledighet <- read_delim(url, delim = ";", 
+                        locale = locale(encoding = "Latin1"),
+                        show_col_types = FALSE) %>% 
+  mutate(
+    `Antall helt ledige` = na_if(`Antall helt ledige`, "*") %>% as.numeric(),
+    `Helt ledige i prosent av arbeidsstyrken` = na_if(`Helt ledige i prosent av arbeidsstyrken`, "*") %>% 
+      str_replace(",", ".") %>% as.numeric()
+  )
+
+rogaland <- ledighet %>% filter(Fylkenavn == "Rogaland")
+```
+
+```{r}
+view(rogaland)
+```
+
+```{r}
+rogaland_t <- rogaland %>% 
+  column_to_rownames("Kommunenavn") %>% 
+  t() %>% 
+  as_tibble(rownames = "variabel")
+```
+
+```{r}
+library(tidyverse)
+
+mtcars %>% 
+  rownames_to_column("model") %>% 
+  filter(model %in% c("Lotus Europa", "Maserati Bora", "Porsche 914.2")) %>% 
+  pull(mpg)
+```
+
+```{r}
+view(rogaland_t)
 
 ```
 
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(
+  data = mtcars, 
+  mapping = aes(x = disp, y = mpg)
+)+
+  geom_point()
+```
+
+```{r}
+ggplot(
+  data = mtcars,
+  mapping = aes(x = disp, y = mpg)
+)+ geom_point(colour = "black")
+```
+
+```{r}
+```
+
+```{r}
+```
