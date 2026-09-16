@@ -9,7 +9,11 @@ editor: visual
 ```{r}
 library(tidyverse)
 library(ggplot2)
+library(ggdist)
+library(nycflights13)
 ```
+
+
 
 ## Ny Txt
 
@@ -93,10 +97,102 @@ mtcars
 ```
 
 ```{r}
-ggplot(
-  data = mtcars,
-  mapping = aes(x = disp, y = mpg)
-)+ geom_point(
-  mapping = aes(colour = hp, size = wt, shape = factor(cyl))
-)
+ggplot(mtcars, aes(x = disp, y = mpg)) +
+  geom_point(aes(colour = hp, size = wt, shape = factor(cyl))) +
+  geom_smooth(method = "lm", level = 0.99, colour = "gray90") +
+  geom_smooth(method = "lm", level = 0.95, colour = "gray60") +
+  geom_smooth(method = "lm", level = 0.90, colour = "gray20") +
+  
 ```
+```{r}
+ggplot(mtcars, aes(x = disp, y = mpg)) +
+  stat_lineribbon(aes(y = mpg), .width = ppoints(5000), alpha = 0.1) +  # gradient automatisk
+  geom_point(aes(colour = hp, size = wt, shape = factor(cyl)))
+```
+```{r}
+tibblemtcars = mtcars |> 
+  as_tibble()
+```
+```{r}
+install.packages("starwars dataset")
+```
+
+
+```{r}
+print(flights[10:19])
+```
+
+
+```{r}
+
+set.seed(1234)
+res_mean_rnorn <- paste("result: ", 
+                        round(mean(
+                          rnorm(n=10, mean = 0,sd = 1)), digits=5), 
+                        sep ="")
+res_mean_rnorn
+```
+```{r}
+set.seed(1234)
+res1234 <- rnorm(n = 10, mean = 0, sd = 1) |> 
+  mean() |> 
+  round(digits = 3) %
+res1234
+```
+
+```{r}
+view(flights)
+```
+
+
+
+
+```{r}
+set.seed(1234)
+res12345 <- rnorm(n = 10, mean = 0, sd = 1) |> 
+  mean() |> 
+  round(digits = 3) |> 
+  (\(x) paste("Result: ", x))()   # \(x) is a native pipe lambda, x = the rounded value
+res12345
+```
+```{r}
+flights <- get(data(flights))
+```
+
+## Antall flights i april og septemer
+
+```{r}
+
+flights |> 
+  filter(month == 4L | month == 9L) |> 
+  nrow()
+
+
+```
+```{r}
+```
+
+
+```{r}
+flights |> 
+  filter(month %in% c(4L, 9L)) |> 
+  nrow()
+```
+
+
+```{r}
+
+
+flights |> 
+  filter(day %in% c(1, 2)) |> 
+  nrow()
+
+```
+```{r}
+flights |> 
+  filter(arr_delay >= 15 & arr_delay < 30) |>
+nrow()
+```
+
+
+
